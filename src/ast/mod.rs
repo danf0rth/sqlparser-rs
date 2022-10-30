@@ -1086,6 +1086,10 @@ pub enum Statement {
         using: Option<TableFactor>,
         /// WHERE
         selection: Option<Expr>,
+        /// ORDER BY (MySQL)
+        order_by: Option<Vec<OrderByExpr>>,
+        /// LIMIT { <N> | ALL } (MySQL)
+        limit: Option<Expr>,
     },
     /// CREATE VIEW
     CreateView {
@@ -1755,6 +1759,8 @@ impl fmt::Display for Statement {
                 table_name,
                 using,
                 selection,
+                order_by,
+                limit,
             } => {
                 write!(f, "DELETE FROM {}", table_name)?;
                 if let Some(using) = using {
@@ -1763,6 +1769,14 @@ impl fmt::Display for Statement {
                 if let Some(selection) = selection {
                     write!(f, " WHERE {}", selection)?;
                 }
+                // TODO: add ORDER BY and LIMIT
+                // if let Some(order_by) = order_by {
+                //
+                // }
+                //
+                // if let Some(limit) = limit {
+                //     write!(f, " LIMIT {}", limit.to_string())
+                // }
                 Ok(())
             }
             Statement::Close { cursor } => {

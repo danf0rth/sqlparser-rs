@@ -3954,6 +3954,8 @@ impl<'a> Parser<'a> {
             table_name,
             using,
             selection,
+            order_by: None,
+            limit: None,
         })
     }
 
