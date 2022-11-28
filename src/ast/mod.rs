@@ -1770,13 +1770,14 @@ impl fmt::Display for Statement {
                     write!(f, " WHERE {}", selection)?;
                 }
                 // TODO: add ORDER BY and LIMIT
-                // if let Some(order_by) = order_by {
-                //
-                // }
-                //
-                // if let Some(limit) = limit {
-                //     write!(f, " LIMIT {}", limit.to_string())
-                // }
+                if let Some(order_by) = order_by {
+                    write!(f, "ORDER BY {}", display_comma_separated(order_by))?;
+                }
+
+                if let Some(limit) = limit {
+                    write!(f, " LIMIT {}", limit.to_string())?;
+                }
+
                 Ok(())
             }
             Statement::Close { cursor } => {
